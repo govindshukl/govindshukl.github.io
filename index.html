@@ -4,7 +4,8 @@
     <title>Join Community on HumanValueX</title>
     <script>
         function redirectToApp() {
-            var communityId = window.location.pathname.split('/').pop();
+            var urlParams = new URLSearchParams(window.location.search);
+            var communityId = urlParams.get('community');
             var appUrl = `humanvaluex://community/${communityId}`;
             var appStoreUrl = 'https://play.google.com/apps/internaltest/4700889356012563161'; // Update with your actual app store URL
             var iosAppStoreUrl = 'https://apps.apple.com/app/humanvaluex/id123456789'; // Update with your actual iOS app store URL
