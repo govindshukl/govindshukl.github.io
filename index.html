@@ -1,1 +1,30 @@
-test mm
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Join Community on HumanValueX</title>
+    <script>
+        function redirectToApp() {
+            var communityId = window.location.pathname.split('/').pop();
+            var appUrl = `humanvaluex://community/${communityId}`;
+            var appStoreUrl = 'https://play.google.com/store/apps/details?id=com.humanvaluex.app'; // Update with your actual app store URL
+            var iosAppStoreUrl = 'https://apps.apple.com/app/humanvaluex/id123456789'; // Update with your actual iOS app store URL
+
+            // Attempt to open the app
+            window.location = appUrl;
+
+            // If the app doesn't open within 2 seconds, redirect to the app store
+            setTimeout(function() {
+                if (/Android/i.test(navigator.userAgent)) {
+                    window.location = appStoreUrl;
+                } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                    window.location = iosAppStoreUrl;
+                }
+            }, 2000);
+        }
+    </script>
+</head>
+<body onload="redirectToApp()">
+    <h1>Redirecting to HumanValueX Community</h1>
+    <p>If you're not redirected, <a href="#" onclick="redirectToApp()">click here</a>.</p>
+</body>
+</html>
