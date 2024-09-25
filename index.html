@@ -1,31 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Join Community on HumanValueX</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HumanValueX Community</title>
     <script>
         function redirectToApp() {
             var urlParams = new URLSearchParams(window.location.search);
             var communityId = urlParams.get('community');
-            console.log('Community ID:', communityId);
-            var appUrl = `humanvaluex://community/${communityId}`;
-            var appStoreUrl = 'https://play.google.com/apps/internaltest/4700889356012563161'; // Update with your actual app store URL
-            var iosAppStoreUrl = 'https://apps.apple.com/app/humanvaluex/id123456789'; // Update with your actual iOS app store URL
-
-            // Attempt to open the app
-            window.location = appUrl;
-
-            // If the app doesn't open within 2 seconds, redirect to the app store
-            setTimeout(function() {
-                if (/Android/i.test(navigator.userAgent)) {
-                    window.location = appStoreUrl;
-                } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                    window.location = iosAppStoreUrl;
-                }
-            }, 2000);
+            
+            if (communityId) {
+                var deepLink = 'yourcommunityapp://community/' + communityId;
+                var androidAppUrl = 'https://play.google.com/store/apps/details?id=com.yourcompany.yourcommunityapp';
+                var iosAppUrl = 'https://apps.apple.com/app/yourcommunityapp/id123456789';
+                
+                // Try to open the app
+                window.location.href = deepLink;
+                
+                // If the app doesn't open within 2 seconds, redirect to the app store
+                setTimeout(function() {
+                    if (/android/i.test(navigator.userAgent)) {
+                        window.location.href = androidAppUrl;
+                    } else if (/ipad|iphone|ipod/i.test(navigator.userAgent)) {
+                        window.location.href = iosAppUrl;
+                    }
+                }, 2000);
+            } else {
+                alert('No community specified');
+            }
         }
+        
+        // Auto-redirect on page load
+        window.onload = redirectToApp;
     </script>
 </head>
-<body onload="redirectToApp()">
+<body>
     <h1>Redirecting to HumanValueX Community</h1>
     <p>If you're not redirected, <a href="#" onclick="redirectToApp()">click here</a>.</p>
 </body>
