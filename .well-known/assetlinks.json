@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.humanvaluex.valuex",
+      "sha256_cert_fingerprints":
+        ["06:04:BF:B3:11:52:59:7F:78:96:3E:65:F7:CB:05:34:9A:66:A5:EF:ED:88:C5:0B:A2:58:7D:48:D8:4B:56:98"]
+    }
+  }
+]
