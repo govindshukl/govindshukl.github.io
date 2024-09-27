@@ -3,39 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HumanValueX Community</title>
+    <title>Redirecting to HumanValueX Community</title>
     <script>
         function redirectToApp() {
             var urlParams = new URLSearchParams(window.location.search);
             var communityId = urlParams.get('community');
-            
             if (communityId) {
-                var deepLink = `https://www.humanvaluex.com/?community=${communityId}`;
+                var deepLink = 'humanvaluex://community/' + communityId;
                 var androidAppUrl = 'https://play.google.com/store/apps/details?id=com.humanvaluex.valuex';
-                var iosAppUrl = 'https://apps.apple.com/app/humanvaluex/id123456789'; // Replace with actual App Store ID
+                var iosAppUrl = 'https://apps.apple.com/app/your-app-id'; // Replace with your App Store URL
 
-                // Try to open the app
+                // Attempt to open the app
                 window.location.href = deepLink;
-                
-                // If the app doesn't open within 2 seconds, redirect to the app store
+
+                // Fallback for Android and iOS
                 setTimeout(function() {
                     if (/android/i.test(navigator.userAgent)) {
                         window.location.href = androidAppUrl;
-                    } else if (/ipad|iphone|ipod/i.test(navigator.userAgent)) {
+                    } else if ((/iPad|iPhone|iPod/.test(navigator.userAgent)) || (/Macintosh/.test(navigator.userAgent) && 'ontouchend' in document)) {
                         window.location.href = iosAppUrl;
+                    } else {
+                        // For desktop, you might want to show a QR code or instructions
+                        document.getElementById('fallback-message').style.display = 'block';
                     }
-                }, 2000);
+                }, 2000); // Wait for 2 seconds before redirecting to app store
             } else {
-                alert('No community specified');
+                // If no community ID, redirect to your website or app store
+                window.location.href = 'https://www.humanvaluex.com';
             }
         }
-        
-        // Auto-redirect on page load
         window.onload = redirectToApp;
     </script>
 </head>
 <body>
     <h1>Redirecting to HumanValueX Community</h1>
-    <p>If you're not redirected, <a href="#" onclick="redirectToApp()">click here</a>.</p>
+    <p>If you're not redirected automatically, <a href="#" onclick="redirectToApp(); return false;">click here</a>.</p>
+    <div id="fallback-message" style="display: none;">
+        <p>To join the community, please install our app:</p>
+        <a href="https://play.google.com/store/apps/details?id=com.humanvaluex.valuex">Download for Android</a>
+        <a href="https://apps.apple.com/app/your-app-id">Download for iOS</a>
+    </div>
 </body>
 </html>
