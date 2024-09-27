@@ -9,26 +9,33 @@
             var urlParams = new URLSearchParams(window.location.search);
             var communityId = urlParams.get('community');
             if (communityId) {
-                var deepLink = 'humanvaluex://community/' + communityId;
+                var deepLink = 'https://www.humanvaluex.com/community/' + communityId;
+                var fallbackUrl = 'humanvaluex://community/' + communityId;
                 var androidAppUrl = 'https://play.google.com/store/apps/details?id=com.humanvaluex.valuex';
                 var iosAppUrl = 'https://apps.apple.com/app/your-app-id'; // Replace with your App Store URL
-
-                // Attempt to open the app
+                
+                // Try to open the app with the universal link first
                 window.location.href = deepLink;
-
+                
                 // Fallback for Android and iOS
                 setTimeout(function() {
-                    if (/android/i.test(navigator.userAgent)) {
-                        window.location.href = androidAppUrl;
-                    } else if ((/iPad|iPhone|iPod/.test(navigator.userAgent)) || (/Macintosh/.test(navigator.userAgent) && 'ontouchend' in document)) {
-                        window.location.href = iosAppUrl;
-                    } else {
-                        // For desktop, you might want to show a QR code or instructions
-                        document.getElementById('fallback-message').style.display = 'block';
-                    }
-                }, 2000); // Wait for 2 seconds before redirecting to app store
+                    // If the app didn't open, try the custom scheme
+                    window.location.href = fallbackUrl;
+                    
+                    // If that also fails, redirect to app store after a short delay
+                    setTimeout(function() {
+                        if (/android/i.test(navigator.userAgent)) {
+                            window.location.href = androidAppUrl;
+                        } else if ((/iPad|iPhone|iPod/.test(navigator.userAgent)) || (/Macintosh/.test(navigator.userAgent) && 'ontouchend' in document)) {
+                            window.location.href = iosAppUrl;
+                        } else {
+                            // For desktop, show a QR code or instructions
+                            document.getElementById('fallback-message').style.display = 'block';
+                        }
+                    }, 1000);
+                }, 1000);
             } else {
-                // If no community ID, redirect to your website or app store
+                // If no community ID, redirect to your website
                 window.location.href = 'https://www.humanvaluex.com';
             }
         }
